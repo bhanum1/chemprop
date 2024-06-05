@@ -862,6 +862,8 @@ def train_model(
             gradient_clip_val=args.grad_clip,
             deterministic=deterministic,
         )
+
+        print("About to train")
         trainer.fit(model, train_loader, val_loader)
 
         if test_loader is not None:
@@ -950,18 +952,10 @@ def main(args):
         features_generators=features_generators, keep_h=args.keep_h, add_h=args.add_h
     )
     
-    print("Pre splits")
     splits = build_splits(args, format_kwargs, featurization_kwargs)
-    print("Post splits")
 
 
     for fold_idx, (train_data, val_data, test_data) in enumerate(zip(*splits)):
-        print("Test:", train_data)
-        try:
-           print(train_data.temps)
-        except:
-           print("Bruh aint no temps")
-
 
         if args.num_folds == 1:
             output_dir = args.output_dir
@@ -996,6 +990,7 @@ def main(args):
         else:
             test_loader = None
 
+        print("Training starting")
         train_model(
             args,
             train_loader,
