@@ -99,7 +99,9 @@ class MSELoss(LossFunction):
 
         preds = torch.Tensor(preds)
 
-        preds.view(-1,1)
+        print("Preds shape:", preds.shape)
+
+        preds = preds.view(-1,1)
 
         print("Preds shape:", preds.shape)
 
