@@ -98,10 +98,11 @@ class MSELoss(LossFunction):
             preds.append(lnA[i] + EaR[i]/298)
 
         preds = torch.Tensor(preds)
-        preds.reshape(-1,1)
 
-        print(preds.shape)
-        
+        preds.view(-1,1)
+
+        print("Preds shape:", preds.shape)
+
         return F.mse_loss(preds, targets, reduction="none")
 
 
