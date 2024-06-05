@@ -863,7 +863,6 @@ def train_model(
             deterministic=deterministic,
         )
 
-        print("About to train")
         trainer.fit(model, train_loader, val_loader)
 
         if test_loader is not None:
@@ -952,8 +951,9 @@ def main(args):
         features_generators=features_generators, keep_h=args.keep_h, add_h=args.add_h
     )
     
+    print("Pre splits")
     splits = build_splits(args, format_kwargs, featurization_kwargs)
-
+    print("Post splits")
 
     for fold_idx, (train_data, val_data, test_data) in enumerate(zip(*splits)):
 
@@ -972,7 +972,6 @@ def main(args):
             save_smiles_splits(args, output_dir, train_dset, val_dset, test_dset)
 
 
-        print("Should come before training starting")
         if "regression" in args.task_type:
             output_scaler = train_dset.normalize_targets()
             val_dset.normalize_targets(output_scaler)
@@ -993,7 +992,6 @@ def main(args):
             test_loader = None
 
         
-        print("Training starting")
         train_model(
             args,
             train_loader,
