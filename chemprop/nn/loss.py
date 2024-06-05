@@ -95,7 +95,7 @@ class MSELoss(LossFunction):
         lnA = preds[:,0]
         EaR = preds[:,1]
         
-        print(place)
+        print(type(place))
         out = lnA + EaR/298
 
         #preds = torch.Tensor(preds)
