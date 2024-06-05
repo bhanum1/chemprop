@@ -100,7 +100,8 @@ class MSELoss(LossFunction):
         preds = torch.Tensor(preds)
         preds.requires_grad_(True)
         preds = preds.view(-1,1)
-
+        
+        print(preds, targets)
         return F.mse_loss(preds, targets, reduction="none")
 
 
