@@ -101,9 +101,8 @@ class MSELoss(LossFunction):
         preds.requires_grad_(True)
         preds = preds.view(-1,1)
         
-        print(preds, targets)
-        print(F.mse_loss(preds, targets, reduction="none"))
-        return F.mse_loss(preds, targets, reduction="none")
+
+        return 1000 * F.mse_loss(preds, targets, reduction="none")
 
 
 @LossFunctionRegistry.register("bounded-mse")
