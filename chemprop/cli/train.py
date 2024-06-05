@@ -916,7 +916,7 @@ def train_model(
             if "multiclass" in args.task_type:
                 df_preds = pd.DataFrame(list(zip(*namess, preds)), columns=columns)
             else:
-                df_preds = pd.DataFrame(list(zip(*namess, *preds.T)), columns=columns)
+                df_preds = pd.DataFrame(list(zip(*namess, *preds.T)), columns=['smiles', 'Temperature', 'Pred_Viscosity'])
             df_preds.to_csv(model_output_dir / "test_predictions.csv", index=False)
 
         best_model_path = checkpointing.best_model_path
