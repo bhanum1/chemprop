@@ -953,6 +953,7 @@ def main(args):
     splits = build_splits(args, format_kwargs, featurization_kwargs)
 
     for fold_idx, (train_data, val_data, test_data) in enumerate(zip(*splits)):
+        print(train_data)
         if args.num_folds == 1:
             output_dir = args.output_dir
         else:
