@@ -200,13 +200,18 @@ class MPNN(pl.LightningModule):
         bmg, X_vd, X_d, *_ = batch
         
         out = self(bmg, X_vd, X_d)
-        print(out.shape)
         lnA = out[:,0]
         EaR = out[:,1]
 
-        print(lnA.shape, EaR.shape)
+        preds = []
+        for i in range(len(lnA)):
+            preds.append(lnA[i] + EaR[i]/298)
 
-        return self(bmg, X_vd, X_d)
+        preds = torch.Tensor(preds)
+        preds.requires_grad_(True)
+        preds = preds.view(-1,1)
+
+        return preds
 
     def configure_optimizers(self):
         opt = optim.Adam(self.parameters(), self.init_lr)
