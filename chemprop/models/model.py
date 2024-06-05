@@ -198,6 +198,10 @@ class MPNN(pl.LightningModule):
             * multiclass classification: ``n x t x c``, where ``c`` is the number of classes
         """
         bmg, X_vd, X_d, *_ = batch
+        
+        lnA, EaR = self(bmg, X_vd, X_d)
+        
+        print(lnA.shape, EaR.shape)
 
         return self(bmg, X_vd, X_d)
 
