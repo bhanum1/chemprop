@@ -92,18 +92,17 @@ LossFunctionRegistry = ClassRegistry[LossFunction]()
 @LossFunctionRegistry.register("mse")
 class MSELoss(LossFunction):
     def _calc_unreduced_loss(self, preds: Tensor, targets: Tensor, *args) -> Tensor:
-        #preds = np.array(preds)
         lnA = preds[:,0]
         EaR = preds[:,1]
 
-        preds = lnA + EaR/298
+        out = lnA + EaR/298
 
         #preds = torch.Tensor(preds)
         #preds.requires_grad_(True)
-        preds = preds.view(-1,1)
+        out = out.view(-1,1)
         
 
-        return F.mse_loss(preds, targets, reduction="none")
+        return F.mse_loss(out, targets, reduction="none")
 
 
 @LossFunctionRegistry.register("bounded-mse")
