@@ -101,7 +101,7 @@ class MSELoss(LossFunction):
         preds.requires_grad_(True)
         preds = preds.view(-1,1)
         
-        print(F.mse_loss(preds, targets, reduction="None"))
+        print(F.mse_loss(preds, targets, reduction="none"))
         return F.mse_loss(preds, targets, reduction="none")
 
 
