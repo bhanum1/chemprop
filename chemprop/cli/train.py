@@ -939,7 +939,6 @@ def main(args):
         weight_col=args.weight_column,
         bounded=args.loss_function is not None and "bounded" in args.loss_function,
     )
-    print("Running main")
     if args.features_generators is not None:
         # TODO: MorganFeaturizers take radius, length, and include_chirality as arguements. Should we expose these through the CLI?
         features_generators = [
@@ -972,6 +971,8 @@ def main(args):
         if args.save_smiles_splits:
             save_smiles_splits(args, output_dir, train_dset, val_dset, test_dset)
 
+
+        print("Should come before training starting")
         if "regression" in args.task_type:
             output_scaler = train_dset.normalize_targets()
             val_dset.normalize_targets(output_scaler)
@@ -991,6 +992,7 @@ def main(args):
         else:
             test_loader = None
 
+        
         print("Training starting")
         train_model(
             args,
