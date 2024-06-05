@@ -95,14 +95,14 @@ class MSELoss(LossFunction):
         EaR = preds[:,1]
         preds = []
         for i in range(len(lnA)):
-            preds.append(lnA[i] + EaR[i]/298)
+            preds.append(lnA[i] + EaR[i]*10000)
 
         preds = torch.Tensor(preds)
         preds.requires_grad_(True)
         preds = preds.view(-1,1)
         
 
-        return 1000 * F.mse_loss(preds, targets, reduction="none")
+        return F.mse_loss(preds, targets, reduction="none")
 
 
 @LossFunctionRegistry.register("bounded-mse")
