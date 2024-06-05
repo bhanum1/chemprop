@@ -4,6 +4,7 @@ from numpy.typing import ArrayLike
 import torch
 from torch import Tensor, nn
 from torch.nn import functional as F
+import numpy as np
 
 from chemprop.utils import ClassRegistry
 
@@ -91,11 +92,11 @@ LossFunctionRegistry = ClassRegistry[LossFunction]()
 @LossFunctionRegistry.register("mse")
 class MSELoss(LossFunction):
     def _calc_unreduced_loss(self, preds: Tensor, targets: Tensor, *args) -> Tensor:
+        preds = np.array(preds)
         lnA = preds[:,0]
         EaR = preds[:,1]
-        preds = []
-        for i in range(len(lnA)):
-            preds.append(lnA[i] + EaR[i]*10000)
+
+        preds = lnA + EaR/298
 
         preds = torch.Tensor(preds)
         preds.requires_grad_(True)
