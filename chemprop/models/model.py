@@ -138,7 +138,6 @@ class MPNN(pl.LightningModule):
     def training_step(self, batch: TrainingBatch, batch_idx):
         bmg, V_d, X_d, targets, weights, lt_mask, gt_mask = batch
 
-        print("Batch:", batch)
 
         mask = targets.isfinite()
         targets = targets.nan_to_num(nan=0.0)
