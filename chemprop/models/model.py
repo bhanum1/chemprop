@@ -199,8 +199,10 @@ class MPNN(pl.LightningModule):
         """
         bmg, X_vd, X_d, *_ = batch
         
-        print(self(bmg, X_vd, X_d))
-        lnA, EaR = self(bmg, X_vd, X_d)
+        out = self(bmg, X_vd, X_d)
+        print(out.shape)
+        lnA = out[:,0]
+        EaR = out[:,1]
 
         print(lnA.shape, EaR.shape)
 
