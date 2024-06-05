@@ -939,6 +939,7 @@ def main(args):
         weight_col=args.weight_column,
         bounded=args.loss_function is not None and "bounded" in args.loss_function,
     )
+    print("Running main")
     if args.features_generators is not None:
         # TODO: MorganFeaturizers take radius, length, and include_chirality as arguements. Should we expose these through the CLI?
         features_generators = [
