@@ -986,6 +986,9 @@ def main(args):
         else:
             test_loader = None
 
+        for batch in train_loader:
+            print(batch)
+            break
         train_model(
             args,
             train_loader,
