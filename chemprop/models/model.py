@@ -198,20 +198,9 @@ class MPNN(pl.LightningModule):
             * multiclass classification: ``n x t x c``, where ``c`` is the number of classes
         """
         bmg, X_vd, X_d, *_ = batch
+    
         
-        out = self(bmg, X_vd, X_d)
-        lnA = out[:,0]
-        EaR = out[:,1]
-
-        preds = []
-        for i in range(len(lnA)):
-            preds.append(lnA[i] + EaR[i]/298)
-
-        preds = torch.Tensor(preds)
-        preds.requires_grad_(True)
-        preds = preds.view(-1,1)
-
-        return preds
+        return self(bmg, X_vd, X_d)
 
     def configure_optimizers(self):
         opt = optim.Adam(self.parameters(), self.init_lr)
