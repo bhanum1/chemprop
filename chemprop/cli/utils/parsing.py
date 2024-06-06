@@ -70,6 +70,8 @@ def parse_csv(
     
     temps = df['temperature'].T.values.tolist()
     print("Original Temps:", temps)
+    print("Temps shape:", temps.shape)
+    print("target shape:", Y.shape)
 
     return smiss, rxnss, Y, weights, lt_mask, gt_mask, temps
 
@@ -282,6 +284,8 @@ def build_data_from_files(
         bounded,
         no_header_row,
     )
+
+    print("Temps after parsing:", temps)
     n_molecules = len(smiss) if smiss is not None else 0
     n_datapoints = len(Y)
 
