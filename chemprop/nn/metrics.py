@@ -65,10 +65,10 @@ class Metric(LossFunction):
         temps: Tensor,
     ):  
         
-        return self._calc_unreduced_loss(preds, targets, mask, lt_mask, gt_mask, temps)[mask].mean()
+        return self._calc_unreduced_loss(preds, targets, mask, weights, lt_mask, gt_mask, temps)[mask].mean()
 
     @abstractmethod
-    def _calc_unreduced_loss(self, preds, targets, mask, lt_mask, gt_mask, temps) -> Tensor:
+    def _calc_unreduced_loss(self, preds, targets, mask, weights, lt_mask, gt_mask, temps) -> Tensor:
         pass
 
 
