@@ -98,7 +98,7 @@ class MSELoss(LossFunction):
         EaR = preds[:,1]
         
 
-        out = lnA + EaR * temps
+        out = lnA + EaR * 1000 * temps
 
         out = out.view(-1,1)
 
