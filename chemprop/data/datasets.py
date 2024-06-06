@@ -72,6 +72,10 @@ class _MolGraphDatasetMixin:
     @property
     def weights(self) -> np.ndarray:
         return np.array([d.weight for d in self.data])
+    
+    @property
+    def temps(self) -> np.ndarray:
+        return np.array([d.temp for d in self.data])
 
     @property
     def gt_mask(self) -> np.ndarray:

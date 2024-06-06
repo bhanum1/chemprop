@@ -877,6 +877,7 @@ def train_model(
             mask = torch.from_numpy(np.isfinite(targets))
             targets = np.nan_to_num(targets, nan=0.0)
             weights = torch.from_numpy(test_dset.weights)
+            temps = torch.from_numpy(test_dset.temps)
             lt_mask = (
                 torch.from_numpy(test_dset.lt_mask) if test_dset.lt_mask[0] is not None else None
             )
@@ -891,6 +892,7 @@ def train_model(
                     weights,
                     lt_mask,
                     gt_mask,
+                    temps,
                 )
                 for metric in model.metrics
             ]
