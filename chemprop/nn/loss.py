@@ -97,7 +97,7 @@ class MSELoss(LossFunction):
         lnA = preds[:,0]
         EaR = preds[:,1]
         
-        temps = temps
+        print("Temps in loss:", temps)
         
         out = lnA + EaR/298
 
