@@ -284,7 +284,6 @@ def build_data_from_files(
         no_header_row,
     )
 
-    print("Temps after parsing:", temps)
     n_molecules = len(smiss) if smiss is not None else 0
     n_datapoints = len(Y)
 
