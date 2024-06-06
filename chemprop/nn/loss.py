@@ -99,6 +99,10 @@ class MSELoss(LossFunction):
         EaR = preds[:,1]
         
         print("Temps in loss:", temps)
+        print("mask",mask)
+        print("lt_mask",lt_mask)
+        print("gt_mask",gt_mask)
+
         
         print(lnA.shape)
         out = lnA + EaR * temps
