@@ -103,6 +103,8 @@ class MSELoss(LossFunction):
         out = lnA + EaR * temps
 
         out = out.view(-1,1)
+
+        print("loss type:", type(out))
         
 
         return F.mse_loss(out, targets, reduction="none")
