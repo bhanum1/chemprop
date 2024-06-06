@@ -69,9 +69,7 @@ def parse_csv(
         gt_mask = None
     
     temps = df['temperature'].T.values.tolist()
-    print("Original Temps:", temps)
-    print("Temps shape:", len(temps))
-    print("target shape:", Y.shape)
+
 
     return smiss, rxnss, Y, weights, lt_mask, gt_mask, temps
 
@@ -188,6 +186,7 @@ def make_datapoints(
         if both ``smiss`` and ``rxnss`` are ``None``.
         if ``smiss`` and ``rxnss`` are both given and have different lengths.
     """
+    print("Temps into make_data:", temps)
     if smiss is None and rxnss is None:
         raise ValueError("args 'smiss' and 'rnxss' were both `None`!")
     elif rxnss is None:
