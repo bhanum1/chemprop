@@ -69,6 +69,7 @@ def parse_csv(
         gt_mask = None
     
     temps = df['temperature'].T.values.tolist()
+    print("Original Temps:", temps)
 
     return smiss, rxnss, Y, weights, lt_mask, gt_mask, temps
 

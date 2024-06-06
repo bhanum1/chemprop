@@ -97,12 +97,9 @@ class MSELoss(LossFunction):
         EaR = preds[:,1]
         
         temps = temps
-        print("Temps:",temps)
         
         out = lnA + EaR/298
 
-        #preds = torch.Tensor(preds)
-        #preds.requires_grad_(True)
         out = out.view(-1,1)
         
 
