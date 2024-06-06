@@ -75,7 +75,6 @@ class LossFunction(nn.Module):
             a scalar containing the fully reduced loss
         """
 
-        print("Temps into loss", temps)
         L = self._calc_unreduced_loss(preds, targets, mask, weights, lt_mask, gt_mask, temps)
         L = L * weights.view(-1, 1) * self.task_weights.view(1, -1) * mask
 
@@ -98,15 +97,12 @@ class MSELoss(LossFunction):
         lnA = preds[:,0]
         EaR = preds[:,1]
         
-        print("Temps in loss:", temps)
 
         out = lnA + EaR * temps
 
         out = out.view(-1,1)
 
         out = out.float()
-
-        print("Output type:", F.mse_loss(out, targets, reduction="none"))
 
         return F.mse_loss(out, targets, reduction="none")
 
