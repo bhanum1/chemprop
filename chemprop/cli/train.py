@@ -920,6 +920,7 @@ def train_model(
                 df_preds = pd.DataFrame(list(zip(*namess, preds)), columns=columns)
             else:
                 df_preds = pd.DataFrame(list(zip(*namess, *preds.T)), columns=['smiles', 'lnA', 'EaR'])
+                df_preds['temperature'] = temps
             df_preds.to_csv(model_output_dir / "test_predictions.csv", index=False)
 
         best_model_path = checkpointing.best_model_path
