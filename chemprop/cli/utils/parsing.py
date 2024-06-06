@@ -186,7 +186,6 @@ def make_datapoints(
         if both ``smiss`` and ``rxnss`` are ``None``.
         if ``smiss`` and ``rxnss`` are both given and have different lengths.
     """
-    print("Temps into make_data:", temps)
     if smiss is None and rxnss is None:
         raise ValueError("args 'smiss' and 'rnxss' were both `None`!")
     elif rxnss is None:
