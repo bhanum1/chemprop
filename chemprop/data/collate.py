@@ -80,10 +80,11 @@ class TrainingBatch(NamedTuple):
     w: Tensor
     lt_mask: Tensor | None
     gt_mask: Tensor | None
+    temps: Tensor | None
 
 
 def collate_batch(batch: Iterable[Datum]) -> TrainingBatch:
-    mgs, V_ds, x_ds, ys, weights, lt_masks, gt_masks = zip(*batch)
+    mgs, V_ds, x_ds, ys, weights, lt_masks, gt_masks, temps = zip(*batch)
 
     return TrainingBatch(
         BatchMolGraph(mgs),
@@ -93,6 +94,7 @@ def collate_batch(batch: Iterable[Datum]) -> TrainingBatch:
         torch.tensor(weights, dtype=torch.float).unsqueeze(1),
         None if lt_masks[0] is None else torch.from_numpy(np.array(lt_masks)),
         None if gt_masks[0] is None else torch.from_numpy(np.array(gt_masks)),
+        None if temps[0] is None else torch.from_numpy(np.array(temps)),
     )
 
 

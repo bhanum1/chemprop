@@ -32,6 +32,8 @@ class _DatapointMixin:
     """A one-hot vector indicating the phase of the data, as used in spectra data."""
     name: str | None = None
     """A string identifier for the datapoint."""
+    temp: np.ndarray | None = None
+    """The temperature associated with the datapoint."""
 
     def __post_init__(self, mfs: list[MoleculeFeaturizer] | None):
         if self.x_d is not None and mfs is not None:

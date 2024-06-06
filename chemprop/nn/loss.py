@@ -48,6 +48,7 @@ class LossFunction(nn.Module):
         weights: Tensor,
         lt_mask: Tensor,
         gt_mask: Tensor,
+        temps: Tensor,
     ):
         """Calculate the mean loss function value given predicted and target values
 
@@ -73,13 +74,13 @@ class LossFunction(nn.Module):
         Tensor
             a scalar containing the fully reduced loss
         """
-        L = self._calc_unreduced_loss(preds, targets, mask, weights, lt_mask, gt_mask)
+        L = self._calc_unreduced_loss(preds, targets, mask, weights, lt_mask, gt_mask, temps)
         L = L * weights.view(-1, 1) * self.task_weights.view(1, -1) * mask
 
         return L.sum() / mask.sum()
 
     @abstractmethod
-    def _calc_unreduced_loss(self, preds, targets, mask, weights, lt_mask, gt_mask) -> Tensor:
+    def _calc_unreduced_loss(self, preds, targets, mask, weights, lt_mask, gt_mask, temps) -> Tensor:
         """Calculate a tensor of shape `b x t` containing the unreduced loss values."""
 
     def extra_repr(self) -> str:
@@ -91,9 +92,11 @@ LossFunctionRegistry = ClassRegistry[LossFunction]()
 
 @LossFunctionRegistry.register("mse")
 class MSELoss(LossFunction):
-    def _calc_unreduced_loss(self, preds: Tensor, targets: Tensor, *args) -> Tensor:
+    def _calc_unreduced_loss(self, preds: Tensor, targets: Tensor, temps: Tensor, *args) -> Tensor:
         lnA = preds[:,0]
         EaR = preds[:,1]
+        
+        temps = temps
         
         out = lnA + EaR/298
 

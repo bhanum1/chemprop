@@ -27,6 +27,7 @@ class Datum(NamedTuple):
     weight: float
     lt_mask: np.ndarray | None
     gt_mask: np.ndarray | None
+    temp: np.ndarray | None
 
 
 MolGraphDataset: TypeAlias = Dataset[Datum]
@@ -178,7 +179,7 @@ class MoleculeDataset(_MolGraphDatasetMixin, MolGraphDataset):
         d = self.data[idx]
         mg = self.mg_cache[idx]
 
-        return Datum(mg, self.V_ds[idx], self.X_d[idx], self.Y[idx], d.weight, d.lt_mask, d.gt_mask)
+        return Datum(mg, self.V_ds[idx], self.X_d[idx], self.Y[idx], d.weight, d.lt_mask, d.gt_mask, d.temp)
 
     @property
     def cache(self) -> bool:
@@ -222,7 +223,27 @@ class MoleculeDataset(_MolGraphDatasetMixin, MolGraphDataset):
 
         self.__V_fs = V_fs
         self._init_cache()
+    
+    '''
+    @property
+    def _temps(self) -> list[np.ndarray]:
+        """the raw temperatures of the dataset"""
+        return [d.temp for d in self.data]
 
+    @property
+    def temps(self) -> list[np.ndarray]:
+        """the (scaled) atom descriptors of the dataset"""
+        return self.__temps
+
+    @temps.setter
+    def temps(self, temps: list[np.ndarray]):
+        """the (scaled) atom features of the dataset"""
+        self._validate_attribute(temps, "temperatures")
+
+        self.__temps = temps
+        self._init_cache()
+    '''
+    
     @property
     def _E_fs(self) -> list[np.ndarray]:
         """the raw bond features of the dataset"""

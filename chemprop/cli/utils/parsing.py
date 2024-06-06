@@ -67,8 +67,10 @@ def parse_csv(
         Y = Y.to_numpy(np.single)
         lt_mask = None
         gt_mask = None
+    
+    temps = df['temperature'].T.values.tolist()
 
-    return smiss, rxnss, Y, weights, lt_mask, gt_mask
+    return smiss, rxnss, Y, weights, lt_mask, gt_mask, temps
 
 
 def get_column_names(
@@ -113,6 +115,7 @@ def make_datapoints(
     V_fss: list[list[np.ndarray] | list[None]] | None,
     E_fss: list[list[np.ndarray] | list[None]] | None,
     V_dss: list[list[np.ndarray] | list[None]] | None,
+    temps: list[list[np.ndarray] | list[None]] | None,
     features_generators: list[VectorFeaturizer[Mol]] | None,
     keep_h: bool,
     add_h: bool,
@@ -223,6 +226,7 @@ def make_datapoints(
                 V_f=V_fss[mol_idx][i],
                 E_f=E_fss[mol_idx][i],
                 V_d=V_dss[mol_idx][i],
+                temp = temps[i]
             )
             for i in range(N)
         ]
@@ -266,7 +270,7 @@ def build_data_from_files(
     p_atom_descs: dict[int, PathLike],
     **featurization_kwargs: Mapping,
 ) -> list[list[MoleculeDatapoint] | list[ReactionDatapoint]]:
-    smiss, rxnss, Y, weights, lt_mask, gt_mask = parse_csv(
+    smiss, rxnss, Y, weights, lt_mask, gt_mask, temps = parse_csv(
         p_data,
         smiles_cols,
         rxn_cols,
@@ -296,6 +300,7 @@ def build_data_from_files(
         V_fss,
         E_fss,
         V_dss,
+        temps,
         **featurization_kwargs,
     )
 
