@@ -70,7 +70,7 @@ def parse_csv(
     
     temps = df['temperature'].T.values.tolist()
     print("Original Temps:", temps)
-    print("Temps shape:", temps.shape)
+    print("Temps shape:", len(temps))
     print("target shape:", Y.shape)
 
     return smiss, rxnss, Y, weights, lt_mask, gt_mask, temps
