@@ -94,7 +94,7 @@ LossFunctionRegistry = ClassRegistry[LossFunction]()
 
 @LossFunctionRegistry.register("mse")
 class MSELoss(LossFunction):
-    def _calc_unreduced_loss(self, preds: Tensor, targets: Tensor, temps: Tensor, *args) -> Tensor:
+    def _calc_unreduced_loss(self, preds: Tensor, targets: Tensor, mask: Tensor, weights: Tensor, lt_mask: Tensor, gt_mask: Tensor, temps: Tensor, *args) -> Tensor:
         lnA = preds[:,0]
         EaR = preds[:,1]
         
