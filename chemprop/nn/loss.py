@@ -104,7 +104,8 @@ class MSELoss(LossFunction):
 
         out = out.view(-1,1)
 
-        print("loss type:", type(out[0]))
+        out = out.float()
+
         print("Output type:", F.mse_loss(out, targets, reduction="none"))
 
         return F.mse_loss(out, targets, reduction="none")
