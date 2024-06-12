@@ -837,6 +837,7 @@ def train_model(
         logger.debug(f"Evaluation metric: '{model.metrics[0].alias}', mode: '{monitor_mode}'")
 
         try:
+            print("Tensorboard is being used")
             trainer_logger = TensorBoardLogger(model_output_dir, "trainer_logs")
         except ModuleNotFoundError:
             trainer_logger = CSVLogger(model_output_dir, "trainer_logs")
