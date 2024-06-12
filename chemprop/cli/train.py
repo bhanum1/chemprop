@@ -840,6 +840,7 @@ def train_model(
             print("Tensorboard is being used")
             trainer_logger = TensorBoardLogger(model_output_dir, "trainer_logs")
         except ModuleNotFoundError:
+            print("Tensorboard is not being used")
             trainer_logger = CSVLogger(model_output_dir, "trainer_logs")
 
         checkpointing = ModelCheckpoint(
