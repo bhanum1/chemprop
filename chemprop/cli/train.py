@@ -865,6 +865,7 @@ def train_model(
             deterministic=deterministic,
         )
 
+        print("Test")
         trainer.fit(model, train_loader, val_loader)
 
         if test_loader is not None:
