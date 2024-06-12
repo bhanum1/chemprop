@@ -263,7 +263,7 @@ def update_args_with_config(args: Namespace, config: dict) -> Namespace:
 def train_model(config, args, train_dset, val_dset, logger, output_transform, input_transforms):
     update_args_with_config(args, config)
 
-    trainer_logger = TensorBoardLogger(args.hpopt_save_dir, "trainer_logs")
+    #trainer_logger = TensorBoardLogger(args.hpopt_save_dir, "trainer_logs")
     train_loader = build_dataloader(
         train_dset, args.batch_size, args.num_workers, seed=args.data_seed
     )
@@ -291,7 +291,7 @@ def train_model(config, args, train_dset, val_dset, logger, output_transform, in
         callbacks=[RayTrainReportCallback(), early_stopping],
         plugins=[RayLightningEnvironment()],
         deterministic=args.pytorch_seed is not None,
-        logger = trainer_logger,
+        #logger = trainer_logger,
     )
     trainer = prepare_trainer(trainer)
     trainer.fit(model, train_loader, val_loader)
