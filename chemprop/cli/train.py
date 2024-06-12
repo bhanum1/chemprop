@@ -837,10 +837,8 @@ def train_model(
         logger.debug(f"Evaluation metric: '{model.metrics[0].alias}', mode: '{monitor_mode}'")
 
         try:
-            print("Tensorboard is being used")
             trainer_logger = TensorBoardLogger(model_output_dir, "trainer_logs")
         except ModuleNotFoundError:
-            print("Tensorboard is not being used")
             trainer_logger = CSVLogger(model_output_dir, "trainer_logs")
 
         checkpointing = ModelCheckpoint(
@@ -865,7 +863,6 @@ def train_model(
             deterministic=deterministic,
         )
 
-        print("Test")
         trainer.fit(model, train_loader, val_loader)
 
         if test_loader is not None:
