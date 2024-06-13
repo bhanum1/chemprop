@@ -73,7 +73,7 @@ def parse_csv(
     try:
         lnA_targets = df['lnA'].T.values.tolist()
     except:
-        print("Ln A column not included")
+        print("No Ln(A) targets provided")
         lnA_targets = None
 
 
@@ -212,6 +212,9 @@ def make_datapoints(
     gt_mask = [None] * N if gt_mask is None else gt_mask
     lt_mask = [None] * N if lt_mask is None else lt_mask
 
+
+    lnA_targets = [None] * N if lnA_targets is None else lnA_targets
+    
     n_mols = len(smiss) if smiss else 0
     X_d = [None] * N if X_d is None else X_d
     V_fss = [[None] * N] * n_mols if V_fss is None else V_fss
