@@ -103,9 +103,7 @@ class MSELoss(LossFunction):
 
         out = out.view(-1,1).float()
         lnA = lnA.view(-1,1).float()
-        lnA_targets = lnA_targets.view(-1,1)
-        
-        print(lnA.shape, lnA_targets.shape)
+        lnA_targets = lnA_targets.view(-1,1).float()
 
         lnA_loss = F.mse_loss(lnA, lnA_targets, reduction="none")
         visc_loss = F.mse_loss(out, targets, reduction="none")
