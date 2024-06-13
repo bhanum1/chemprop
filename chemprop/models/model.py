@@ -201,6 +201,7 @@ class MPNN(pl.LightningModule):
         """
         bmg, X_vd, X_d, *_ = batch
     
+        print(self(bmg, X_vd, X_d))
         
         return self(bmg, X_vd, X_d)
 
