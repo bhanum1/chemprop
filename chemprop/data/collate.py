@@ -96,7 +96,7 @@ def collate_batch(batch: Iterable[Datum]) -> TrainingBatch:
         None if lt_masks[0] is None else torch.from_numpy(np.array(lt_masks)),
         None if gt_masks[0] is None else torch.from_numpy(np.array(gt_masks)),
         None if temps[0] is None else torch.from_numpy(np.array(temps)),
-        None if lnA_targets is None else torch.from_numpy(np.array(lnA_targets)),
+        None if lnA_targets is None else torch.from_numpy(lnA_targets),
     )
 
 
