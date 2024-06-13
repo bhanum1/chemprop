@@ -875,7 +875,7 @@ def train_model(
                 test_dset = test_loader.dataset
             
             targets = test_dset.Y
-            print(targets)
+
             mask = torch.from_numpy(np.isfinite(targets))
             targets = np.nan_to_num(targets, nan=0.0)
             weights = torch.from_numpy(test_dset.weights)
