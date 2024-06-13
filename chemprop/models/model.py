@@ -160,13 +160,12 @@ class MPNN(pl.LightningModule):
         metric2loss = {f"val/{m.alias}": l for m, l in zip(self.metrics, losses)}
 
         self.log_dict(metric2loss, batch_size=len(batch[0]))
-        print(losses[0])
         self.log("val_loss", losses[0], batch_size=len(batch[0]), prog_bar=True)
 
     def test_step(self, batch: TrainingBatch, batch_idx: int = 0):
         losses = self._evaluate_batch(batch)
         metric2loss = {f"batch_averaged_test/{m.alias}": l for m, l in zip(self.metrics, losses)}
-
+        print(losses[0])
         self.log_dict(metric2loss, batch_size=len(batch[0]))
 
     def _evaluate_batch(self, batch) -> list[Tensor]:
