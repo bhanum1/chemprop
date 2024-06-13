@@ -102,11 +102,8 @@ class MSELoss(LossFunction):
         out = lnA + EaR * 1000 * temps
 
         out = out.view(-1,1).float()
-
-
         lnA = lnA.view(-1,1).float()
-
-        print(lnA_targets)
+        
         if lnA_targets is not None:
             lnA_targets = lnA_targets.view(-1,1).float()
             lnA_loss = F.mse_loss(lnA, lnA_targets, reduction="none")
