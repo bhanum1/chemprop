@@ -903,8 +903,7 @@ def train_model(
                 for metric in model.metrics
             ]
 
-            print(targets,preds)
-            
+
             preds_metrics = {
                 f"entire_test/{m.alias}": l.item() for m, l in zip(model.metrics, preds_losses)
             }
