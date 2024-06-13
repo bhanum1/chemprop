@@ -136,7 +136,7 @@ class MPNN(pl.LightningModule):
         return self.predictor(self.fingerprint(bmg, V_d, X_d))
 
     def training_step(self, batch: TrainingBatch, batch_idx):
-        bmg, V_d, X_d, targets, weights, lt_mask, gt_mask, temps = batch
+        bmg, V_d, X_d, targets, weights, lt_mask, gt_mask, temps, lnA_targets = batch
 
 
 
@@ -145,7 +145,7 @@ class MPNN(pl.LightningModule):
 
         Z = self.fingerprint(bmg, V_d, X_d)
         preds = self.predictor.train_step(Z)
-        l = self.criterion(preds, targets, mask, weights, lt_mask, gt_mask, temps)
+        l = self.criterion(preds, targets, mask, weights, lt_mask, gt_mask, temps, lnA_targets)
 
         self.log("train_loss", l, prog_bar=True)
 
@@ -169,14 +169,14 @@ class MPNN(pl.LightningModule):
         self.log_dict(metric2loss, batch_size=len(batch[0]))
 
     def _evaluate_batch(self, batch) -> list[Tensor]:
-        bmg, V_d, X_d, targets, _, lt_mask, gt_mask, temps = batch
+        bmg, V_d, X_d, targets, _, lt_mask, gt_mask, temps, lnA_targets = batch
 
         mask = targets.isfinite()
         targets = targets.nan_to_num(nan=0.0)
         preds = self(bmg, V_d, X_d)
 
         return [
-            metric(preds, targets, mask, None, lt_mask, gt_mask, temps) for metric in self.metrics[:-1]
+            metric(preds, targets, mask, None, lt_mask, gt_mask, temps, lnA_targets) for metric in self.metrics[:-1]
         ]
 
     def predict_step(self, batch: TrainingBatch, batch_idx: int, dataloader_idx: int = 0) -> Tensor:

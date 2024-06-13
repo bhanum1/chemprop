@@ -49,6 +49,7 @@ class LossFunction(nn.Module):
         lt_mask: Tensor,
         gt_mask: Tensor,
         temps: Tensor,
+        lnA_targets: Tensor,
     ):
         """Calculate the mean loss function value given predicted and target values
 
@@ -75,13 +76,13 @@ class LossFunction(nn.Module):
             a scalar containing the fully reduced loss
         """
 
-        L = self._calc_unreduced_loss(preds, targets, mask, weights, lt_mask, gt_mask, temps)
+        L = self._calc_unreduced_loss(preds, targets, mask, weights, lt_mask, gt_mask, temps, lnA_targets)
         L = L * weights.view(-1, 1) * self.task_weights.view(1, -1) * mask
 
         return L.sum() / mask.sum()
 
     @abstractmethod
-    def _calc_unreduced_loss(self, preds, targets, mask, weights, lt_mask, gt_mask, temps) -> Tensor:
+    def _calc_unreduced_loss(self, preds, targets, mask, weights, lt_mask, gt_mask, temps, lnA_targets) -> Tensor:
         """Calculate a tensor of shape `b x t` containing the unreduced loss values."""
 
     def extra_repr(self) -> str:
@@ -93,18 +94,22 @@ LossFunctionRegistry = ClassRegistry[LossFunction]()
 
 @LossFunctionRegistry.register("mse")
 class MSELoss(LossFunction):
-    def _calc_unreduced_loss(self, preds: Tensor, targets: Tensor, mask: Tensor, weights: Tensor | None,  lt_mask: Tensor, gt_mask: Tensor, temps: Tensor, *args) -> Tensor:
+    def _calc_unreduced_loss(self, preds: Tensor, targets: Tensor, mask: Tensor, weights: Tensor | None,  lt_mask: Tensor, gt_mask: Tensor, temps: Tensor, lnA_targets: Tensor | None, *args) -> Tensor:
         lnA = preds[:,0]
         EaR = preds[:,1]
         
 
         out = lnA + EaR * 1000 * temps
 
-        out = out.view(-1,1)
+        out = out.view(-1,1).float()
+        lnA = lnA.view(-1,1).float()
 
-        out = out.float()
+        lnA_loss = F.mse_loss(lnA, lnA_targets, reduction="none")
+        visc_loss = F.mse_loss(out, targets, reduction="none")
 
-        return F.mse_loss(out, targets, reduction="none")
+        loss = 0.2 * lnA_loss + 0.8 * visc_loss
+
+        return loss
 
 
 @LossFunctionRegistry.register("bounded-mse")

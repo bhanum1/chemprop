@@ -28,6 +28,7 @@ class Datum(NamedTuple):
     lt_mask: np.ndarray | None
     gt_mask: np.ndarray | None
     temp: np.ndarray | None
+    lnA_target: np.ndarray | None
 
 
 MolGraphDataset: TypeAlias = Dataset[Datum]
@@ -76,6 +77,10 @@ class _MolGraphDatasetMixin:
     @property
     def temps(self) -> np.ndarray:
         return np.array([d.temp for d in self.data])
+    
+    @property
+    def lnA_targets(self) -> np.ndarray:
+        return np.array([d.lnA_target for d in self.data])
 
     @property
     def gt_mask(self) -> np.ndarray:
@@ -183,7 +188,7 @@ class MoleculeDataset(_MolGraphDatasetMixin, MolGraphDataset):
         d = self.data[idx]
         mg = self.mg_cache[idx]
 
-        return Datum(mg, self.V_ds[idx], self.X_d[idx], self.Y[idx], d.weight, d.lt_mask, d.gt_mask, d.temp)
+        return Datum(mg, self.V_ds[idx], self.X_d[idx], self.Y[idx], d.weight, d.lt_mask, d.gt_mask, d.temp, d.lnA_target)
 
     @property
     def cache(self) -> bool:

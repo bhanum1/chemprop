@@ -70,8 +70,14 @@ def parse_csv(
     
     temps = df['temperature'].T.values.tolist()
 
+    try:
+        lnA_targets = df['lnA'].T.values.tolist()
+    except:
+        print("Ln A column not included")
+        lnA_targets = None
 
-    return smiss, rxnss, Y, weights, lt_mask, gt_mask, temps
+
+    return smiss, rxnss, Y, weights, lt_mask, gt_mask, temps, lnA_targets
 
 
 def get_column_names(
@@ -117,6 +123,7 @@ def make_datapoints(
     E_fss: list[list[np.ndarray] | list[None]] | None,
     V_dss: list[list[np.ndarray] | list[None]] | None,
     temps: list[list[np.ndarray] | list[None]] | None,
+    lnA_targets: list[list[np.ndarray] | list[None]] | None,
     features_generators: list[VectorFeaturizer[Mol]] | None,
     keep_h: bool,
     add_h: bool,
@@ -227,7 +234,8 @@ def make_datapoints(
                 V_f=V_fss[mol_idx][i],
                 E_f=E_fss[mol_idx][i],
                 V_d=V_dss[mol_idx][i],
-                temp = temps[i]
+                temp = temps[i],
+                lnA_target = lnA_targets[i]
             )
             for i in range(N)
         ]
@@ -271,7 +279,7 @@ def build_data_from_files(
     p_atom_descs: dict[int, PathLike],
     **featurization_kwargs: Mapping,
 ) -> list[list[MoleculeDatapoint] | list[ReactionDatapoint]]:
-    smiss, rxnss, Y, weights, lt_mask, gt_mask, temps = parse_csv(
+    smiss, rxnss, Y, weights, lt_mask, gt_mask, temps, lnA_targets = parse_csv(
         p_data,
         smiles_cols,
         rxn_cols,
@@ -303,6 +311,7 @@ def build_data_from_files(
         E_fss,
         V_dss,
         temps,
+        lnA_targets,
         **featurization_kwargs,
     )
 
