@@ -871,7 +871,13 @@ def train_model(
             for param in model.parameters():
                 print("Model Param:", param)
             predss = trainer.predict(dataloaders=test_loader, ckpt_path='best')
+
+            for param in model.parameters():
+                print("Model Param:", param)
+
+        
             preds = torch.concat(predss, 0).numpy()
+
 
             if isinstance(test_loader.dataset, MulticomponentDataset):
                 test_dset = test_loader.dataset.datasets[0]
