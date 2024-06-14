@@ -867,7 +867,9 @@ def train_model(
 
         if test_loader is not None:
             print("Step2: Predicting Beginning")
-            print("Model:", model)
+
+            for param in model.parameters():
+                print("Model Param:", param)
             predss = trainer.predict(dataloaders=test_loader, ckpt_path='best')
             preds = torch.concat(predss, 0).numpy()
 
