@@ -880,7 +880,7 @@ def train_model(
                 print("Model Param:", param)
                 new_params.append(param)
 
-            for i in range(4):
+            for i in range(5,11):
                 print("Old:", old_params[i])
                 print("New:", new_params[i])
         
