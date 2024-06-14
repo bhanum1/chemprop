@@ -199,13 +199,12 @@ class MPNN(pl.LightningModule):
             ``t`` elements the second target, etc.
             * multiclass classification: ``n x t x c``, where ``c`` is the number of classes
         """
-        print("Step3: Predicting has begun")
         bmg, V_d, X_d, targets, _, lt_mask, gt_mask, temps, lnA_targets = batch
 
         targets = targets.nan_to_num(nan=0.0)
         preds = self(bmg, V_d, X_d)
 
-        print("Step4: predictions:", preds[0])
+        print("predictions:", preds)
 
         return preds
 
