@@ -868,7 +868,7 @@ def train_model(
 
         if test_loader is not None:
             print("Step2: Predicting Beginning")
-            predss = trainer.predict(dataloaders=test_loader)
+            predss = trainer.predict(dataloaders=test_loader, ckpt_path='best')
             preds = torch.concat(predss, 0).numpy()
 
             if isinstance(test_loader.dataset, MulticomponentDataset):
