@@ -864,10 +864,10 @@ def train_model(
         )
 
         trainer.fit(model, train_loader, val_loader)
-        print("Step1: Training Done")
 
         if test_loader is not None:
             print("Step2: Predicting Beginning")
+            print("Model:", model)
             predss = trainer.predict(dataloaders=test_loader, ckpt_path='best')
             preds = torch.concat(predss, 0).numpy()
 
