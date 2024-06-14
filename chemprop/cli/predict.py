@@ -176,6 +176,7 @@ def find_models(model_path: Path):
 def make_prediction_for_model(
     args: Namespace, model_path: Path, multicomponent: bool, output_path: Path
 ):
+    print("MODEL LOADING IN MAKE_PREDICTION_FROM_MODEL")
     model = load_model(model_path, multicomponent)
 
     bounded = any(
@@ -297,7 +298,7 @@ def main(args):
     model_paths = find_models(args.model_path)
 
     for i, model_path in enumerate(model_paths):
-        print(f"Predicting with model at '{model_path}'")
+        logger.info(f"Predicting with model at '{model_path}'")
         output_path = args.output.parent / Path(
             str(args.output.stem) + f"_{i}" + str(args.output.suffix)
         )
