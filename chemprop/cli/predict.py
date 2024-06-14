@@ -297,7 +297,7 @@ def main(args):
     model_paths = find_models(args.model_path)
 
     for i, model_path in enumerate(model_paths):
-        logger.info(f"Predicting with model at '{model_path}'")
+        print(f"Predicting with model at '{model_path}'")
         output_path = args.output.parent / Path(
             str(args.output.stem) + f"_{i}" + str(args.output.suffix)
         )
