@@ -866,18 +866,17 @@ def train_model(
         trainer.fit(model, train_loader, val_loader)
 
         if test_loader is not None:
-            print("Step2: Predicting Beginning")
 
             old_params = []
             for param in model.parameters():
-                print("Model Param:", param)
+                #print("Model Param:", param)
                 old_params.append(param)
             
-            predss = trainer.predict(dataloaders=test_loader, ckpt_path='best')
+            predss = trainer.predict(dataloaders=test_loader)
 
             new_params = []
             for param in model.parameters():
-                print("Model Param:", param)
+                #print("Model Param:", param)
                 new_params.append(param)
 
             for i in range(5,11):
