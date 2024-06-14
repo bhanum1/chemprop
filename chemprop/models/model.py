@@ -174,6 +174,7 @@ class MPNN(pl.LightningModule):
         targets = targets.nan_to_num(nan=0.0)
         preds = self(bmg, V_d, X_d)
         
+        print("evaluate_batch predictions:", preds)
 
         return [
             metric(preds, targets, mask, None, lt_mask, gt_mask, temps, lnA_targets) for metric in self.metrics[:-1]
