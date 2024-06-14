@@ -866,8 +866,8 @@ def train_model(
         trainer.fit(model, train_loader, val_loader)
 
         if test_loader is not None:
-
-            predss = trainer.predict(dataloaders=train_loader)
+            trainer.test(model,test_loader)
+            predss = trainer.predict(dataloaders=test_loader)
             preds = torch.concat(predss, 0).numpy()
 
 
