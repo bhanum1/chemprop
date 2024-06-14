@@ -79,7 +79,6 @@ class LossFunction(nn.Module):
         L = self._calc_unreduced_loss(preds, targets, mask, weights, lt_mask, gt_mask, temps, lnA_targets)
         L = L * weights.view(-1, 1) * self.task_weights.view(1, -1) * mask
 
-        print(mask.sum())
         return L.sum() / mask.sum()
 
     @abstractmethod
@@ -115,6 +114,7 @@ class MSELoss(LossFunction):
 
         loss = 0.2 * lnA_loss + 0.8 * visc_loss
         
+        print(loss.sum())
         return loss
 
 
