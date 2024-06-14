@@ -199,11 +199,19 @@ class MPNN(pl.LightningModule):
             grouped. I.e., the first ``t`` elements are the first target for each task, the second
             ``t`` elements the second target, etc.
             * multiclass classification: ``n x t x c``, where ``c`` is the number of classes
-        """
+        
         bmg, V_d, X_d, targets, _, lt_mask, gt_mask, temps, lnA_targets = batch
 
         targets = targets.nan_to_num(nan=0.0)
         preds = self(bmg, V_d, X_d)
+        """
+
+        bmg, V_d, X_d, targets, weights, lt_mask, gt_mask, temps, lnA_targets = batch
+
+        targets = targets.nan_to_num(nan=0.0)
+
+        Z = self.fingerprint(bmg, V_d, X_d)
+        preds = self.predictor.train_step(Z)
 
         print("predictions:", preds)
 
