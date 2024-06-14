@@ -868,13 +868,21 @@ def train_model(
         if test_loader is not None:
             print("Step2: Predicting Beginning")
 
+            old_params = []
             for param in model.parameters():
                 print("Model Param:", param)
+                old_params.append(param)
+            
             predss = trainer.predict(dataloaders=test_loader, ckpt_path='best')
 
+            new_params = []
             for param in model.parameters():
                 print("Model Param:", param)
+                new_params.append(param)
 
+            for i in range(4):
+                print("Old:", old_params[i])
+                print("New:", new_params[i])
         
             preds = torch.concat(predss, 0).numpy()
 
