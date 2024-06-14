@@ -871,7 +871,7 @@ def train_model(
             for param in model.parameters():
                 #print("Model Param:", param)
                 old_params.append(param)
-            
+            print("old model stored")
             predss = trainer.predict(dataloaders=test_loader)
 
             new_params = []
