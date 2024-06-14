@@ -114,7 +114,6 @@ class MSELoss(LossFunction):
 
         loss = 0.2 * lnA_loss + 0.8 * visc_loss
         
-        print(loss.sum())
         return loss
 
 
