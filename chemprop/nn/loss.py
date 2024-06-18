@@ -50,6 +50,7 @@ class LossFunction(nn.Module):
         gt_mask: Tensor,
         temps: Tensor,
         lnA_targets: Tensor,
+        EaR_targets: Tensor,
     ):
         """Calculate the mean loss function value given predicted and target values
 
@@ -76,13 +77,13 @@ class LossFunction(nn.Module):
             a scalar containing the fully reduced loss
         """
 
-        L = self._calc_unreduced_loss(preds, targets, mask, weights, lt_mask, gt_mask, temps, lnA_targets)
+        L = self._calc_unreduced_loss(preds, targets, mask, weights, lt_mask, gt_mask, temps, lnA_targets, EaR_targets)
         L = L * weights.view(-1, 1) * self.task_weights.view(1, -1) * mask
 
         return L.sum() / mask.sum()
 
     @abstractmethod
-    def _calc_unreduced_loss(self, preds, targets, mask, weights, lt_mask, gt_mask, temps, lnA_targets) -> Tensor:
+    def _calc_unreduced_loss(self, preds, targets, mask, weights, lt_mask, gt_mask, temps, lnA_targets, EaR_targets) -> Tensor:
         """Calculate a tensor of shape `b x t` containing the unreduced loss values."""
 
     def extra_repr(self) -> str:
@@ -94,7 +95,7 @@ LossFunctionRegistry = ClassRegistry[LossFunction]()
 
 @LossFunctionRegistry.register("mse")
 class MSELoss(LossFunction):
-    def _calc_unreduced_loss(self, preds: Tensor, targets: Tensor, mask: Tensor, weights: Tensor | None,  lt_mask: Tensor, gt_mask: Tensor, temps: Tensor, lnA_targets: Tensor | None, *args) -> Tensor:
+    def _calc_unreduced_loss(self, preds: Tensor, targets: Tensor, mask: Tensor, weights: Tensor | None,  lt_mask: Tensor, gt_mask: Tensor, temps: Tensor, lnA_targets: Tensor | None, EaR_targets: Tensor | None, *args) -> Tensor:
         lnA = preds[:,0]
         EaR = preds[:,1]
         
@@ -111,7 +112,14 @@ class MSELoss(LossFunction):
         else:
             lnA_loss = visc_loss
 
-        loss = 0.1 * lnA_loss + 0.9 * visc_loss
+        if EaR_targets is not None:
+            EaR_targets = EaR_targets.view(-1,1).float()
+            EaR_loss = F.mse_loss(EaR, EaR_targets, reduction="none")
+        else:
+            EaR_loss = visc_loss
+
+    
+        loss = 0.1 * lnA_loss + 0.1 * EaR_loss + 0.8 * visc_loss
         
         return loss
 

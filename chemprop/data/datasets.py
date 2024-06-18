@@ -83,6 +83,10 @@ class _MolGraphDatasetMixin:
         return np.array([d.lnA_target for d in self.data])
 
     @property
+    def EaR_targets(self) -> np.ndarray:
+        return np.array([d.EaR_target for d in self.data])
+    
+    @property
     def gt_mask(self) -> np.ndarray:
         return np.array([d.gt_mask for d in self.data])
 

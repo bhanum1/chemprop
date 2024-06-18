@@ -76,8 +76,13 @@ def parse_csv(
         print("No Ln(A) targets provided")
         lnA_targets = None
 
+    try:
+        EaR_targets = df['EaR'].T.values.tolist()
+    except:
+        print("No Ea / R targets provided")
+        EaR_targets = None
 
-    return smiss, rxnss, Y, weights, lt_mask, gt_mask, temps, lnA_targets
+    return smiss, rxnss, Y, weights, lt_mask, gt_mask, temps, lnA_targets, EaR_targets
 
 
 def get_column_names(
@@ -124,6 +129,7 @@ def make_datapoints(
     V_dss: list[list[np.ndarray] | list[None]] | None,
     temps: list[list[np.ndarray] | list[None]] | None,
     lnA_targets: list[list[np.ndarray] | list[None]] | None,
+    EaR_targets: list[list[np.ndarray] | list[None]] | None,
     features_generators: list[VectorFeaturizer[Mol]] | None,
     keep_h: bool,
     add_h: bool,
@@ -214,6 +220,7 @@ def make_datapoints(
 
 
     lnA_targets = [None] * N if lnA_targets is None else lnA_targets
+    EaR_targets = [None] * N if EaR_targets is None else EaR_targets
     
     n_mols = len(smiss) if smiss else 0
     X_d = [None] * N if X_d is None else X_d
@@ -238,7 +245,8 @@ def make_datapoints(
                 E_f=E_fss[mol_idx][i],
                 V_d=V_dss[mol_idx][i],
                 temp = temps[i],
-                lnA_target = lnA_targets[i]
+                lnA_target = lnA_targets[i],
+                EaR_target = EaR_targets[i]
             )
             for i in range(N)
         ]
@@ -282,7 +290,7 @@ def build_data_from_files(
     p_atom_descs: dict[int, PathLike],
     **featurization_kwargs: Mapping,
 ) -> list[list[MoleculeDatapoint] | list[ReactionDatapoint]]:
-    smiss, rxnss, Y, weights, lt_mask, gt_mask, temps, lnA_targets = parse_csv(
+    smiss, rxnss, Y, weights, lt_mask, gt_mask, temps, lnA_targets, EaR_targets = parse_csv(
         p_data,
         smiles_cols,
         rxn_cols,
@@ -315,6 +323,7 @@ def build_data_from_files(
         V_dss,
         temps,
         lnA_targets,
+        EaR_targets,
         **featurization_kwargs,
     )
 

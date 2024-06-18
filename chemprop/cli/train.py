@@ -886,6 +886,11 @@ def train_model(
             except:
                 print("No ln(A) targets provided")
                 lnA_targets = None
+            try:
+                EaR_targets = torch.from_numpy(test_dset.EaR_targets)
+            except:
+                print("No Ea / R targets provided")
+                EaR_targets = None
             lt_mask = (
                 torch.from_numpy(test_dset.lt_mask) if test_dset.lt_mask[0] is not None else None
             )
@@ -902,6 +907,7 @@ def train_model(
                     gt_mask,
                     temps,
                     lnA_targets,
+                    EaR_targets,
                 )
                 for metric in model.metrics
             ]
