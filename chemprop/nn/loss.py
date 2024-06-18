@@ -120,7 +120,7 @@ class MSELoss(LossFunction):
             EaR_loss = visc_loss
 
     
-        loss = 0.2 * lnA_loss + 0.2 * EaR_loss + 0.6 * visc_loss
+        loss = 0.0 * lnA_loss + 0.0 * EaR_loss + 1.0 * visc_loss
         
         return loss
 
