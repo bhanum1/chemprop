@@ -36,6 +36,8 @@ class _DatapointMixin:
     """The temperature associated with the datapoint."""
     lnA_target: np.ndarray | None = None
     """The Ln(A) true value associated with the datapoint."""
+    EaR_target: np.ndarray | None = None
+    """The Ea / R true value associated with the datapoint."""
 
     def __post_init__(self, mfs: list[MoleculeFeaturizer] | None):
         if self.x_d is not None and mfs is not None:

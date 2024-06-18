@@ -29,6 +29,7 @@ class Datum(NamedTuple):
     gt_mask: np.ndarray | None
     temp: np.ndarray | None
     lnA_target: np.ndarray | None
+    EaR_target: np.ndarray | None
 
 
 MolGraphDataset: TypeAlias = Dataset[Datum]
@@ -192,7 +193,7 @@ class MoleculeDataset(_MolGraphDatasetMixin, MolGraphDataset):
         d = self.data[idx]
         mg = self.mg_cache[idx]
 
-        return Datum(mg, self.V_ds[idx], self.X_d[idx], self.Y[idx], d.weight, d.lt_mask, d.gt_mask, d.temp, d.lnA_target)
+        return Datum(mg, self.V_ds[idx], self.X_d[idx], self.Y[idx], d.weight, d.lt_mask, d.gt_mask, d.temp, d.lnA_target, d.EaR_target)
 
     @property
     def cache(self) -> bool:
