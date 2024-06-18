@@ -408,10 +408,11 @@ def main(args: Namespace):
     input_transforms = normalize_inputs(train_dset, val_dset, args)
 
     if "regression" in args.task_type:
-        output_scaler = train_dset.normalize_targets()
-        val_dset.normalize_targets(output_scaler)
-        logger.info(f"Train data: mean = {output_scaler.mean_} | std = {output_scaler.scale_}")
-        output_transform = UnscaleTransform.from_standard_scaler(output_scaler)
+        output_transform = None
+        #output_scaler = train_dset.normalize_targets()
+        #val_dset.normalize_targets(output_scaler)
+        #logger.info(f"Train data: mean = {output_scaler.mean_} | std = {output_scaler.scale_}")
+        #output_transform = UnscaleTransform.from_standard_scaler(output_scaler)
     else:
         output_transform = None
 
