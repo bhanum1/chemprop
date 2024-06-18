@@ -111,7 +111,7 @@ class MSELoss(LossFunction):
         else:
             lnA_loss = visc_loss
 
-        loss = 0.2 * lnA_loss + 0.8 * visc_loss
+        loss = 0.4 * lnA_loss + 0.6 * visc_loss
         
         return loss
 
