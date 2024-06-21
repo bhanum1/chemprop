@@ -53,8 +53,7 @@ class Metric(LossFunction):
     """
 
     minimize: bool = True
-    self.loss_reg = 0.0
-    
+
     def forward(
         self,
         preds: Tensor,
@@ -67,7 +66,7 @@ class Metric(LossFunction):
         lnA_targets: Tensor,
         EaR_targets: Tensor,
     ):  
-        
+        self.loss_reg = 0.0
         return self._calc_unreduced_loss(preds, targets, mask, weights, lt_mask, gt_mask, temps, lnA_targets, EaR_targets)[mask].mean()
 
     @abstractmethod
