@@ -57,7 +57,7 @@ try:
         "init_lr_ratio": tune.loguniform(lower=1e-2, upper=1),
         "max_lr": tune.loguniform(lower=1e-4, upper=1e-2),
         "warmup_epochs": None,
-        "loss_regularizer": tune.choice([0.0] * 8 + list(np.arange(0.05, 0.45, 0.05))),
+        "loss_reg": tune.choice([0.0] * 8 + list(np.arange(0.05, 0.45, 0.05))),
     }
 except ImportError:
     NO_RAY = True
