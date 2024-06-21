@@ -201,6 +201,7 @@ def add_train_args(parser: ArgumentParser) -> ArgumentParser:
         default=0.0,
         help="dropout probability in message passing/FFN layers",
     )
+
     mp_args.add_argument(
         "--mpn-shared",
         action="store_true",
@@ -331,6 +332,12 @@ def add_train_args(parser: ArgumentParser) -> ArgumentParser:
         type=float,
         default=0.0,
         help="Value used in regularization for evidential loss function. The default value recommended by Soleimany et al.(2021) is 0.2. Optimal value is dataset-dependent; it is recommended that users test different values to find the best value for their model.",
+    )
+    train_args.add_argument(
+        "--loss_reg",
+        type=float,
+        default=0.0,
+        help="Weight to give auxilary loss from lnA",
     )
 
     train_args.add_argument(
@@ -782,6 +789,8 @@ def build_model(
         # spectral_activation=args.spectral_activation, TODO: Add in v2.1
     )
 
+    predictor.reg_loss = args.reg_loss
+    
     if args.loss_function is None:
         logger.info(
             f"No loss function was specified! Using class default: {predictor_cls._T_default_criterion}"
