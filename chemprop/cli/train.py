@@ -790,7 +790,7 @@ def build_model(
         # spectral_activation=args.spectral_activation, TODO: Add in v2.1
     )
 
-    predictor.loss_reg = args.loss_reg
+    predictor.criterion.loss_reg = args.loss_reg
 
     if args.loss_function is None:
         logger.info(

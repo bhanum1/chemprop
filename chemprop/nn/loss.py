@@ -39,6 +39,7 @@ class LossFunction(nn.Module):
         super().__init__()
         task_weights = torch.as_tensor(task_weights, dtype=torch.float).view(1, -1)
         self.register_buffer("task_weights", task_weights)
+        self.loss_reg = 0
 
     def forward(
         self,
@@ -120,8 +121,8 @@ class MSELoss(LossFunction):
         else:
             EaR_loss = visc_loss
         '''
-    
-        loss = 0.2 * lnA_loss + 0.8 * visc_loss
+        
+        loss = self.loss_reg * lnA_loss + visc_loss
         
         return loss
 
