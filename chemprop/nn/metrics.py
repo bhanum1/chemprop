@@ -53,7 +53,8 @@ class Metric(LossFunction):
     """
 
     minimize: bool = True
-
+    self.loss_reg = 0.0
+    
     def forward(
         self,
         preds: Tensor,
