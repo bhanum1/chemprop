@@ -333,7 +333,7 @@ def add_train_args(parser: ArgumentParser) -> ArgumentParser:
         default=0.0,
         help="Value used in regularization for evidential loss function. The default value recommended by Soleimany et al.(2021) is 0.2. Optimal value is dataset-dependent; it is recommended that users test different values to find the best value for their model.",
     )
-    
+
     train_args.add_argument(
         "--loss_reg",
         type=float,
@@ -790,7 +790,7 @@ def build_model(
         # spectral_activation=args.spectral_activation, TODO: Add in v2.1
     )
 
-    predictor.reg_loss = args.reg_loss
+    predictor.loss_reg = args.loss_reg
 
     if args.loss_function is None:
         logger.info(
