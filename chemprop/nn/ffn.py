@@ -45,7 +45,7 @@ class MLP(nn.Sequential, FFN):
         #dims = [input_dim] + [hidden_dim] * n_layers + [output_dim]
 
         dims = [input_dim]
-        for i in range(hidden_dim):
+        for i in range(n_layers):
             size = hidden_dim // (i+1)
             dims.append([size])
 
