@@ -807,7 +807,8 @@ def build_model(
         for idx in range(args.frzn_ffn_layers):
             model.predictor.ffn[idx].requires_grad_(False)
             setattr(model.predictor.ffn[idx + 1][1], "p", 0.0)
-
+            
+        model.predictor.criterion.loss_reg = args.loss_reg
         return model
 
     return mpnn_cls(
