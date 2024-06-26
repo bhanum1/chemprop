@@ -44,7 +44,7 @@ class MLP(nn.Sequential, FFN):
         act = get_activation_function(activation)
         #dims = [input_dim] + [hidden_dim] * n_layers + [output_dim]
 
-        dims = [input_dim]
+        dims = [[input_dim]]
         for i in range(n_layers):
             size = hidden_dim // (i+1)
             dims.append([size])
