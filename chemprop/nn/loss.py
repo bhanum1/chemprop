@@ -121,7 +121,6 @@ class MSELoss(LossFunction):
         else:
             EaR_loss = visc_loss
         '''
-        print(self.loss_reg)
         loss = self.loss_reg * lnA_loss + visc_loss
 
         return loss
