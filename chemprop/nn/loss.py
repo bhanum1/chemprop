@@ -111,7 +111,6 @@ class MSELoss(LossFunction):
         if lnA_targets is not None:
             lnA_targets = lnA_targets.view(-1,1).float()
             lnA_loss = F.mse_loss(lnA, lnA_targets, reduction="none")
-            print('test')
         else:
             lnA_loss = visc_loss
 
@@ -122,7 +121,7 @@ class MSELoss(LossFunction):
         else:
             EaR_loss = visc_loss
         '''
-        
+        print(self.loss_reg)
         loss = self.loss_reg * lnA_loss + visc_loss
 
         return loss
