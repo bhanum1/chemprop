@@ -49,7 +49,7 @@ class MLP(nn.Sequential, FFN):
             size = hidden_dim // (i+1)
             dims.append(size)
 
-        dims.append([output_dim])
+        dims.append(output_dim)
         print(dims)
         blocks = [nn.Sequential(nn.Linear(dims[0], dims[1]))]
         if len(dims) > 2:
