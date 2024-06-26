@@ -805,6 +805,7 @@ def build_model(
         )
         model.bn.apply(lambda module: module.requires_grad_(False))
         for idx in range(args.frzn_ffn_layers):
+            print(model.predictor.ffn[idx])
             model.predictor.ffn[idx].requires_grad_(False)
             setattr(model.predictor.ffn[idx + 1][1], "p", 0.0)
             
