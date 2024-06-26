@@ -811,6 +811,7 @@ def build_model(
             
         model.predictor.criterion.loss_reg = args.loss_reg
         print('TEST TEST TEST')
+        print(args.frzn_ffn_layers)
         return model
 
     return mpnn_cls(
