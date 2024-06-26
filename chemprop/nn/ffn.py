@@ -42,8 +42,14 @@ class MLP(nn.Sequential, FFN):
     ):
         dropout = nn.Dropout(dropout)
         act = get_activation_function(activation)
-        dims = [input_dim] + [hidden_dim] * n_layers + [output_dim]
-        print(dims)
+        #dims = [input_dim] + [hidden_dim] * n_layers + [output_dim]
+
+        dims = [input_dim]
+        for i in range(len(hidden_dim)):
+            size = hidden_dim // i
+            dims.append([size])
+
+        dims.append([output_dim])
         blocks = [nn.Sequential(nn.Linear(dims[0], dims[1]))]
         if len(dims) > 2:
             blocks.extend(
