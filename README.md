@@ -11,7 +11,7 @@
 [![Downloads](https://static.pepy.tech/badge/chemprop/month)](https://pepy.tech/project/chemprop)
 [![Downloads](https://static.pepy.tech/badge/chemprop/week)](https://pepy.tech/project/chemprop)
 
-Chemprop is a repository containing message passing neural networks for molecular property prediction.
+Chemprop is a repository containing message passing neural networks for molecular property prediction. This repository has been cloned from the original Chemprop repository, and been modified to use the arrhenius equation. See CHANGES.md for a list of changes.
 
 Documentation can be found [here](https://chemprop.readthedocs.io/en/main/).
 
