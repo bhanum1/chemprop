@@ -13,3 +13,4 @@ This repository was created based on version 2.0.1 of the Chemprop library from 
 - To normalize, calculate mean and stdev of the target values, and use them to normalize the target and the lnA values (same mean and stdev for both)
 - For temperature normalization, find the max temperature in the train dataset, Tmax. The normalized temperature is equal to Tmax / T. This is done to ensure the lnA value does not change due to temperature normalization
 - During hyperparameter optimization, a new term is added, "loss_reg". This defines what factor the lnA loss is multiplied by when added to the total loss. Typical values are 0.0 - 0.4.
+- Transfer learning now does not freeze the gnn layers
